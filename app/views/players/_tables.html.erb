@@ -24,8 +24,8 @@
         <td class='text-center'><%= player.position %></td>
         <td class='text-center'><%= player.overall %></td>
         <td class='text-center'><%= player.potential %></td>
-        <td class='text-center'>€<%= player.value %>M</td>
-        <td class='text-center'>€<%= player.wage %>K</td>
+        <td class='text-center'>€<%= player.value.fdiv(1000000).round %>M</td>
+        <td class='text-center'>€<%= player.wage.fdiv(1000).round %>K</td>
         <td class='text-center'><%= player.total %></td>
         <% if params[:controller] == 'players' && params[:action] == 'index' %>
           <td>
