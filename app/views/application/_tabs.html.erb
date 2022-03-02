@@ -1,9 +1,9 @@
 <div class="row mt-4">
   <div class="col">
     <div class="btn-group">
-      <%= link_to 'Squad', players_path, class: "btn btn-secondary #{'active' if active == 'squads'}" %>
+      <%= link_to 'Squad', root_path, class: "btn btn-secondary #{'active' if active == 'squads'}" %>
       <%= link_to 'Squad', player_path(Player.first), class: "btn btn-secondary #{'active' if active == 'targets'}" %>
-      <a href="#" class="btn btn-secondary <%= 'active' if active == 'search' %>">Search</a>
+      <%= link_to 'Search', '#', class: "btn btn-secondary #{'active' if active == 'search'}" %>
     </div>
   </div>
 </div>
