@@ -1,9 +1,10 @@
 class PlayersController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index, :replacement]
+  skip_before_action :authenticate_user!, only: [:index, :show]
 
   def index
+    @players = Player.all
   end
 
-  def replacement
+  def show
   end
 end

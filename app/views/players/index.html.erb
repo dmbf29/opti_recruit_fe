@@ -3,44 +3,7 @@
   <%= render 'tabs', active: 'squads' %>
   <div class="row mt-4  ">
     <div class="col">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">NAME</th>
-            <th scope="col" class='text-center'>AGE</th>
-            <th scope="col" class='text-center'>POS</th>
-            <th scope="col" class='text-center'>OVA</th>
-            <th scope="col" class='text-center'>POT</th>
-            <th scope="col" class='text-center'>VAL</th>
-            <th scope="col" class='text-center'>WAGE</th>
-            <th scope="col" class='text-center'>TOTAL</th>
-            <th scope="col"> </th>
-          </tr>
-        </thead>
-        <tbody>
-          <% if false %>
-            <% @players.each_with_index do |player, index| %>
-              <tr>
-                <th scope="row"><%= index + 1 %></th>
-                <td><%= player.name %></td>
-                <td class='text-center'><%= player.age %></td>
-                <td class='text-center'><%= player.position %></td>
-                <td class='text-center'><%= player.overall %></td>
-                <td class='text-center'><%= player.potential %></td>
-                <td class='text-center'>€<%= player.value %>M</td>
-                <td class='text-center'>€<%= player.wage %>K</td>
-                <td class='text-center'><%= player.total %></td>
-                <td>
-                  <% link_to "/squads.html", query: { name: player.name } do %>
-                    <i class="fas fa-search"></i>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          <% end %>
-        </tbody>
-      </table>
+      <%= render 'players/tables', players: @players %>
     </div>
   </div>
 </div>
