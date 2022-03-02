@@ -10,7 +10,9 @@
       <th scope="col" class='text-center'>VAL</th>
       <th scope="col" class='text-center'>WAGE</th>
       <th scope="col" class='text-center'>TOTAL</th>
-      <th scope="col"> </th>
+      <% if params[:controller] == 'players' && params[:action] == 'index' %>
+        <th scope="col"> </th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
@@ -25,11 +27,13 @@
         <td class='text-center'>€<%= player.value %>M</td>
         <td class='text-center'>€<%= player.wage %>K</td>
         <td class='text-center'><%= player.total %></td>
-        <td>
-          <%= link_to player_path(player), class: 'text-secondary' do %>
-            <i class="fas fa-search"></i>
-          <% end %>
-        </td>
+        <% if params[:controller] == 'players' && params[:action] == 'index' %>
+          <td>
+            <%= link_to player_path(player), class: 'text-secondary' do %>
+              <i class="fas fa-search"></i>
+            <% end %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

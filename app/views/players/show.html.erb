@@ -3,6 +3,12 @@
   <%= render 'tabs', active: 'targets' %>
   <div class="row mt-4  ">
     <div class="col">
+      <%= render 'players/tables', players: [@player] %>
+    </div>
+  </div>
+  <div class="row mt-4  ">
+    <div class="col">
+      <h4>Possible Replacements</h4>
       <%= render 'players/tables', players: @players %>
     </div>
   </div>
