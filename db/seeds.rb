@@ -1,6 +1,6 @@
 require 'csv'
 # puts "Destroying all players..."
-Player.destroy_all
+# Player.destroy_all
 years = [18, 19, 20, 21, 22]
 
 def create_teams(years)
@@ -78,6 +78,7 @@ def fbref_players(years)
         aerials_won: row['aerials_won']
       ).first_or_create
     end
+    print '*'
   end
   puts "... created #{Player.count} players."
 end
@@ -154,6 +155,7 @@ def sofifa_players(years)
           weight_kg: row['weight_kg']
         )
       end
+      print '*'
     end
   end
   # Add errors to csv
