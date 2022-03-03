@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_03_033304) do
+ActiveRecord::Schema.define(version: 2022_03_03_080008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,43 @@ ActiveRecord::Schema.define(version: 2022_03_03_033304) do
     t.integer "weight_kg"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "games"
+    t.integer "minutes"
+    t.integer "goals"
+    t.integer "assists"
+    t.integer "goals_pens"
+    t.float "goals_per90"
+    t.float "assists_per90"
+    t.float "goals_pens_per90"
+    t.float "xg"
+    t.float "npxg"
+    t.integer "xa"
+    t.float "xg_per90"
+    t.float "xa_per90"
+    t.float "npxg_per90"
+    t.integer "passes_completed"
+    t.integer "passes"
+    t.integer "passes_completed_short"
+    t.integer "passes_short"
+    t.integer "passes_completed_medium"
+    t.integer "passes_medium"
+    t.integer "passes_completed_long"
+    t.integer "passes_long"
+    t.integer "progressive_passes"
+    t.integer "gca"
+    t.integer "tackles"
+    t.integer "dribble_tackles"
+    t.integer "pressures"
+    t.integer "blocks"
+    t.integer "interceptions"
+    t.integer "clearances"
+    t.integer "touches_att_pen_area"
+    t.integer "dribbles_completed"
+    t.integer "progressive_carries"
+    t.integer "progressive_passes_received"
+    t.integer "crosses"
+    t.integer "tackles_won"
+    t.integer "aerials_won"
     t.index ["player_id"], name: "index_player_seasons_on_player_id"
     t.index ["season_id"], name: "index_player_seasons_on_season_id"
   end
@@ -63,6 +100,8 @@ ActiveRecord::Schema.define(version: 2022_03_03_033304) do
     t.bigint "team_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "short_name"
+    t.string "long_name"
     t.index ["team_id"], name: "index_players_on_team_id"
   end
 

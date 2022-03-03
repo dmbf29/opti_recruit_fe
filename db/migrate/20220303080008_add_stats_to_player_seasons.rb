@@ -1,0 +1,41 @@
+class AddStatsToPlayerSeasons < ActiveRecord::Migration[6.1]
+  def change
+    add_column :player_seasons, :games, :integer
+    add_column :player_seasons, :minutes, :integer
+    add_column :player_seasons, :goals, :integer
+    add_column :player_seasons, :assists, :integer
+    add_column :player_seasons, :goals_pens, :integer
+    add_column :player_seasons, :goals_per90, :float
+    add_column :player_seasons, :assists_per90, :float
+    add_column :player_seasons, :goals_pens_per90, :float
+    add_column :player_seasons, :xg, :float
+    add_column :player_seasons, :npxg, :float
+    add_column :player_seasons, :xa, :integer
+    add_column :player_seasons, :xg_per90, :float
+    add_column :player_seasons, :xa_per90, :float
+    add_column :player_seasons, :npxg_per90, :float
+    add_column :player_seasons, :passes_completed, :integer
+    add_column :player_seasons, :passes, :integer
+    add_column :player_seasons, :passes_completed_short, :integer
+    add_column :player_seasons, :passes_short, :integer
+    add_column :player_seasons, :passes_completed_medium, :integer
+    add_column :player_seasons, :passes_medium, :integer
+    add_column :player_seasons, :passes_completed_long, :integer
+    add_column :player_seasons, :passes_long, :integer
+    add_column :player_seasons, :progressive_passes, :integer
+    add_column :player_seasons, :gca, :integer
+    add_column :player_seasons, :tackles, :integer
+    add_column :player_seasons, :dribble_tackles, :integer
+    add_column :player_seasons, :pressures, :integer
+    add_column :player_seasons, :blocks, :integer
+    add_column :player_seasons, :interceptions, :integer
+    add_column :player_seasons, :clearances, :integer
+    add_column :player_seasons, :touches_att_pen_area, :integer
+    add_column :player_seasons, :dribbles_completed, :integer
+    add_column :player_seasons, :progressive_carries, :integer
+    add_column :player_seasons, :progressive_passes_received, :integer
+    add_column :player_seasons, :crosses, :integer
+    add_column :player_seasons, :tackles_won, :integer
+    add_column :player_seasons, :aerials_won, :integer
+  end
+end
