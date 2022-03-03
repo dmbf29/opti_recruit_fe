@@ -10,20 +10,72 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_02_122611) do
+ActiveRecord::Schema.define(version: 2022_03_03_033304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "player_seasons", force: :cascade do |t|
+    t.bigint "player_id", null: false
+    t.bigint "season_id", null: false
+    t.integer "international_reputation"
+    t.integer "release_cause_eur"
+    t.integer "pace"
+    t.integer "shooting"
+    t.integer "passing"
+    t.integer "dribbling"
+    t.integer "defending"
+    t.integer "physic"
+    t.integer "attacking_crossing"
+    t.integer "attacking_heading_accuracy"
+    t.integer "attacking_short_passing"
+    t.integer "skill_dribbling"
+    t.integer "skill_fk_accuracy"
+    t.integer "skill_long_passing"
+    t.integer "skill_ball_control"
+    t.integer "movement_acceleration"
+    t.integer "movement_spring_speed"
+    t.integer "power_shot_power"
+    t.integer "power_jumping"
+    t.integer "power_stamina"
+    t.integer "power_strength"
+    t.integer "power_long_shots"
+    t.integer "defending_marking_awareness"
+    t.integer "defending_standing_tackle"
+    t.integer "defending_sliding_tackle"
+    t.string "player_face_url"
+    t.integer "heigh_cm"
+    t.integer "weight_kg"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["player_id"], name: "index_player_seasons_on_player_id"
+    t.index ["season_id"], name: "index_player_seasons_on_season_id"
+  end
+
   create_table "players", force: :cascade do |t|
     t.string "name"
     t.string "position"
-    t.integer "age"
-    t.integer "overall"
-    t.integer "potential"
-    t.integer "value"
-    t.integer "wage"
-    t.integer "total"
+    t.integer "sofifa_id"
+    t.string "player_url"
+    t.string "dob"
+    t.string "nationality_name"
+    t.string "preferred_foot"
+    t.bigint "team_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_id"], name: "index_players_on_team_id"
+  end
+
+  create_table "seasons", force: :cascade do |t|
+    t.string "year"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string "name"
+    t.string "club_logo_url"
+    t.string "club_flag_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -40,4 +92,7 @@ ActiveRecord::Schema.define(version: 2022_03_02_122611) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "player_seasons", "players"
+  add_foreign_key "player_seasons", "seasons"
+  add_foreign_key "players", "teams"
 end
