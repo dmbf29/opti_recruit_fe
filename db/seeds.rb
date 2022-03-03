@@ -94,7 +94,7 @@ def sofifa_players(years)
       first_letter = row['short_name'][0]
       last_names = row['short_name'].split[1..-1].join(' ')
 
-      player = Player.find_by("name ~* ?", "^#{first_letter}\w* #{last_names}")
+      player = Player.find_by("name ~* ?", "^#{first_letter}\\w* #{last_names}")
       if player.nil?
         puts "Error: #{row['short_name']}"
         errors << row
