@@ -33,8 +33,8 @@ def fbref_players(years)
       player = Player.where(
         name: row['name']
       ).first_or_create
-      season = season.where(
-        number: "20#{year}"
+      season = Season.where(
+        year: "20#{year}"
       ).first_or_create
       PlayerSeason.where(
         player: player,
