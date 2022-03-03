@@ -2,12 +2,11 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col"></th>
       <th scope="col">NAME</th>
       <th scope="col" class='text-center'>AGE</th>
       <th scope="col" class='text-center'>POS</th>
-      <!-- <th scope="col" class='text-center'>OVA</th>
-      <th scope="col" class='text-center'>POT</th> -->
+      <th scope="col" class='text-center'>OVA</th>
+      <th scope="col" class='text-center'>POT</th>
       <th scope="col" class='text-center'>VAL</th>
       <th scope="col" class='text-center'>WAGE</th>
       <% if params[:controller] == 'players' && params[:action] == 'index' %>
@@ -19,18 +18,13 @@
     <% players.each_with_index do |player, index| %>
       <tr>
         <th scope="row"><%= index + 1 %></th>
-        <% if player.player_seasons.first&.player_face_url %>
-          <td><%#= image_tag player.player_seasons.first&.player_face_url, class: 'w-100' %></td>
-        <% else %>
-          <td></td>
-        <% end %>
-        <td><%= player.name %></td>
+        <td><% if player.player_seasons.first&.player_face_url %><%= image_tag player.player_seasons.last&.player_face_url, width: 30 %><% end %> <%= player.name %></td>
         <td class='text-center'><%= player.age %></td>
         <td class='text-center'><%= player.position %></td>
-        <td class='text-center'><%#= player.player_seasons.first&.overall %></td>
-        <td class='text-center'><%#= player.player_seasons.first&.potential %></td>
-        <!-- <td class='text-center'>€<%#= player.player_seasons.first&...value.fdiv(1000000).round %>M</td> -->
-        <!--  <td class='text-center'>€<%#= player.wage.fdiv(1000).round %>K</td>  -->
+        <td class='text-center'><%= player.player_seasons.last&.overall %></td>
+        <td class='text-center'><%= player.player_seasons.last&.potential %></td>
+        <td class='text-center'>€<%= player.player_seasons.last&.value_eur&.fdiv(1000000)&.round %>M</td>
+        <td class='text-center'>€<%= player.player_seasons.last&.wage_eur&.fdiv(1000)&.round %>K</td>
         <% if params[:controller] == 'players' && params[:action] == 'index' %>
           <td>
             <%= link_to player_path(player), class: 'text-secondary' do %>
