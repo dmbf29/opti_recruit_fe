@@ -15,7 +15,7 @@ def create_teams(years)
         name: row['club_name'],
         club_logo_url: row['club_name'],
         club_flag_url: row['club_logo_url']
-      ).first_or_create!
+      ).first_or_create
       print '*'
     end
   end
