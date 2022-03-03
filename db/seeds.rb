@@ -31,7 +31,7 @@ def fbref_players(years)
 
     CSV.foreach(filepath, headers: :first_row) do |row|
       player = Player.where(
-        name: name
+        name: row['name']
       ).first_or_create
       season = season.where(
         number: "20#{year}"
