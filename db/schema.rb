@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_03_080008) do
+ActiveRecord::Schema.define(version: 2022_03_03_094814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,8 @@ ActiveRecord::Schema.define(version: 2022_03_03_080008) do
     t.integer "crosses"
     t.integer "tackles_won"
     t.integer "aerials_won"
+    t.integer "overall"
+    t.integer "potential"
     t.index ["player_id"], name: "index_player_seasons_on_player_id"
     t.index ["season_id"], name: "index_player_seasons_on_season_id"
   end

@@ -122,6 +122,8 @@ def sofifa_players(years)
         next unless ps
 
         ps.update(
+          overall: row['overall'],
+          potential: row['potential'],
           international_reputation: row['international_reputation'],
           release_cause_eur: row['release_cause_eur'],
           pace: row['pace'],
