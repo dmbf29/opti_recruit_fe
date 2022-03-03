@@ -95,13 +95,13 @@ def sofifa_players(years)
       first_letter = row['short_name'][0]
       last_names = row['short_name'].split[1..-1].join(' ')
 
-      player = Player.find_by("name ~* ?", "^#{first_letter}\\w* #{last_names}")
+      player = Player.find_by("name ~* ?", "^#{first_letter}\\w* #{last_names}") || Player.find_by(name: row['short_name']) # ||
       if player.nil?
         puts "Error: #{row['short_name']}"
         errors << row
       else
         player.update(
-          position: row['positions'].split(', ').first,
+          position: row['player_positions'].split(', ').first,
           sofifa_id: row['sofifa_id'],
           player_url: row['player_url'],
           dob: row['dob'],
@@ -112,8 +112,8 @@ def sofifa_players(years)
           team: Team.find_by(name: row['club_name'])
         )
 
-        season = season.where(
-          number: "20#{year}"
+        season = Season.where(
+          year: "20#{year}"
         ).first_or_create
 
         ps = PlayerSeason.find_by(
@@ -125,6 +125,8 @@ def sofifa_players(years)
         ps.update(
           overall: row['overall'],
           potential: row['potential'],
+          value_eur: row['value_eur'],
+          wage_eur: row['wage_eur'],
           international_reputation: row['international_reputation'],
           release_cause_eur: row['release_cause_eur'],
           pace: row['pace'],
@@ -171,6 +173,6 @@ def save_player_errors(errors)
   end
 end
 
-create_teams(years)
-fbref_players(years)
+# create_teams(years)
+# fbref_players(years)
 sofifa_players(years)

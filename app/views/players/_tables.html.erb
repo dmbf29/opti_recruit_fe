@@ -20,7 +20,7 @@
       <tr>
         <th scope="row"><%= index + 1 %></th>
         <% if player.player_seasons.first&.player_face_url %>
-          <td><%= image_tag player.player_seasons.first&.player_face_url, class: 'w-100' %></td>
+          <td><%#= image_tag player.player_seasons.first&.player_face_url, class: 'w-100' %></td>
         <% else %>
           <td></td>
         <% end %>
