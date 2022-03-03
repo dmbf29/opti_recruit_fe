@@ -1,7 +1,8 @@
 require 'csv'
 # puts "Destroying all players..."
 # Player.destroy_all
-years = [18, 19, 20, 21, 22]
+# years = [18, 19, 20, 21, 22]
+years = [21]
 
 def create_teams(years)
   puts "Creating Teams..."
@@ -95,9 +96,10 @@ def sofifa_players(years)
       first_letter = row['short_name'][0]
       last_names = row['short_name'].split[1..-1].join(' ')
 
-      player = Player.find_by("name ~* ?", "^#{first_letter}\\w* #{last_names}") || Player.find_by(name: row['short_name']) # ||
+      player = Player.find_by("name ~* ?", "^#{first_letter}\\w* #{last_names}") || Player.find_by(name: row['long_name']) || Player.find_by(name: row['short_name']) # ||
       if player.nil?
         puts "Error: #{row['short_name']}"
+        binding.pry
         errors << row
       else
         player.update(
@@ -156,8 +158,8 @@ def sofifa_players(years)
           heigh_cm: row['heigh_cm'],
           weight_kg: row['weight_kg']
         )
+        print '*'
       end
-      print '*'
     end
   end
   # Add errors to csv
