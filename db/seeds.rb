@@ -97,13 +97,15 @@ def fbref_players(years)
     filepath = "db/raw_data/fbref_20#{year}.csv"
     next unless File.exist?(filepath)
     puts "opening #{filepath}..."
+    season = Season.where(
+      year: "20#{year}"
+    ).first_or_create
 
     CSV.foreach(filepath, headers: :first_row) do |row|
+      team = Team.find_by(name: row['team']) || Team.find_by(alternate_name: row['team'])
+
       player = Player.create(
         name: row['name']
-      ).first_or_create
-      season = Season.where(
-        year: "20#{year}"
       ).first_or_create
       PlayerSeason.where(
         player: player,
@@ -160,6 +162,10 @@ def sofifa_players(years)
     next unless File.exist?(filepath)
     puts "opening #{filepath}..."
 
+    season = Season.where(
+      year: "20#{year}"
+    ).first_or_create
+
     CSV.foreach(filepath, headers: :first_row) do |row|
         player = Player.create(
           position: row['player_positions'].split(', ').first,
@@ -171,12 +177,7 @@ def sofifa_players(years)
           short_name: row['short_name'],
           long_name: row['long_name']
         )
-
-        season = Season.where(
-          year: "20#{year}"
-        ).first_or_create
-
-        ps = PlayerSeason.create(
+        PlayerSeason.create(
           team: Team.find_by(name: row['club_name']),
           player: player,
           season: season,
