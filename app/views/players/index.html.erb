@@ -1,6 +1,11 @@
 <div class="container mt-5">
   <%= render 'header' %>
   <%= render 'tabs', active: 'squads' %>
+  <% if false %>
+    <%= simple_form_for :league, url: players_path, method: "GET", html: { class: 'form-inline' } do |f| %>
+      <%= f.input :name, collection: League.order(:name), label: false, input_html: { data: { controller: 'select2' } } %>
+    <% end %>
+  <% end %>
   <div class="row mt-4  ">
     <div class="col">
       <%= render 'players/tables', players: @players %>

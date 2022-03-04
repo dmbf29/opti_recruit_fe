@@ -28,8 +28,11 @@ SKIP_TEAMS = [
  "Peruvian Primera División",
  "Finnish Veikkausliiga",
  "Rep. Ireland Airtricity League",
- "Liga de Fútbol Profesional Boliviano",
- "Venezuelan Primera División"
+ "Liga de Fútbol Profesional Bolivianqo",
+ "Venezuelan Primera División",
+ "Hungarian Nemzeti Bajnokság I",
+ "Indian Super League",
+ "Cypriot First Division"
 ]
 
 def create_sofifa_teams(years)
@@ -188,7 +191,6 @@ def sofifa_players(years)
         long_name: row['long_name']
       ).first_or_create
       if player.errors.any?
-        puts
         p player.errors.full_messages
         puts
       end
