@@ -3,6 +3,34 @@ require 'csv'
 # Player.destroy_all
 # years = [18, 19, 20, 21, 22]
 years = [21]
+SKIP_TEAMS = [
+ "Chinese Super League",
+ "Saudi Abdul L. Jameel League",
+ "Japanese J. League Division 1",
+ "Croatian Prva HNL",
+ "Greek Super League",
+ "Czech Republic Gambrinus Liga",
+ "Chilian Campeonato Nacional",
+ "Australian Hyundai A-League",
+ "Norwegian Eliteserien",
+ "Danish Superliga",
+ "Austrian Football Bundesliga",
+ "UAE Arabian Gulf League",
+ "Uruguayan Primera División",
+ "Paraguayan Primera División",
+ "Colombian Liga Postobón",
+ "Polish T-Mobile Ekstraklasa",
+ "Korean K League 1",
+ "Ecuadorian Serie A",
+ "South African Premier Division",
+ "Romanian Liga I",
+ "German 3. Bundesliga",
+ "Peruvian Primera División",
+ "Finnish Veikkausliiga",
+ "Rep. Ireland Airtricity League",
+ "Liga de Fútbol Profesional Boliviano",
+ "Venezuelan Primera División"
+]
 
 def create_sofifa_teams(years)
   puts "Creating Teams and Leagues..."
@@ -12,6 +40,8 @@ def create_sofifa_teams(years)
     puts "opening #{filepath}..."
 
     CSV.foreach(filepath, headers: :first_row) do |row|
+      next if SKIP_TEAMS.include?(row['league_name'])
+
       league = League.where(
         name: row['league_name'],
         level: row['league_level']
@@ -30,23 +60,35 @@ def create_sofifa_teams(years)
   puts "... created #{Team.count} teams"
 end
 
-def create_fbref_teams(years)
-  # puts "Creating Teams..."
-  # years.each do |year|
-  #   filepath = "db/raw_data/players_#{year}.csv"
-  #   next unless File.exist?(filepath)
-  #   puts "opening #{filepath}..."
+def update_teams_with_fbref(years)
+  puts "Creating Teams..."
+  years.each do |year|
+    filepath = "db/raw_data/fbref_20#{year}.csv"
+    next unless File.exist?(filepath)
+    puts "opening #{filepath}..."
 
-  #   CSV.foreach(filepath, headers: :first_row) do |row|
-  #     Team.where(
-  #       name: row['club_name'],
-  #       club_logo_url: row['club_name'],
-  #       club_flag_url: row['club_logo_url']
-  #     ).first_or_create
-  #     print '*'
-  #   end
-  # end
-  # puts "... created #{Team.count}"
+    CSV.foreach(filepath, headers: :first_row) do |row|
+
+      league = League.find_by(name: row['league_name_sofifa'])
+      until league
+        puts "Couldn't find league: #{row['league_name_sofifa']}. Enter proper name:"
+        print '> '
+        user_league = gets.chomp
+        league = League.find_by(name: user_league)
+      end
+
+      team = Team.find_by(name: row['team']) || Team.find_by(alternate_name: row['team'])
+      until team
+        puts "** #{row['team']} ** Not found."
+        puts league.teams.pluck(:name).join('  ')
+        print '> '
+        user_team = gets.chomp
+        team = Team.find_by(name: user_team)
+        team&.update(alternate_name: row['team'])
+      end
+    end
+  end
+  puts "... created #{Team.count}"
 end
 
 def fbref_players(years)
@@ -57,7 +99,7 @@ def fbref_players(years)
     puts "opening #{filepath}..."
 
     CSV.foreach(filepath, headers: :first_row) do |row|
-      player = Player.where(
+      player = Player.create(
         name: row['name']
       ).first_or_create
       season = Season.where(
@@ -119,15 +161,7 @@ def sofifa_players(years)
     puts "opening #{filepath}..."
 
     CSV.foreach(filepath, headers: :first_row) do |row|
-      first_letter = row['short_name'][0]
-      last_names = row['short_name'].split[1..-1].join(' ')
-
-      player = Player.find_by("name ~* ?", "^#{first_letter}\.* #{last_names}") || Player.find_by(name: row['long_name']) || Player.find_by(name: row['short_name']) # ||
-      if player.nil?
-        puts "Error: #{row['short_name']}"
-        errors << row
-      else
-        player.update(
+        player = Player.create(
           position: row['player_positions'].split(', ').first,
           sofifa_id: row['sofifa_id'],
           player_url: row['player_url'],
@@ -135,21 +169,17 @@ def sofifa_players(years)
           nationality_name: row['nationality_name'],
           preferred_foot: row['preferred_foot'],
           short_name: row['short_name'],
-          long_name: row['long_name'],
-          team: Team.find_by(name: row['club_name'])
+          long_name: row['long_name']
         )
 
         season = Season.where(
           year: "20#{year}"
         ).first_or_create
 
-        ps = PlayerSeason.find_by(
+        ps = PlayerSeason.create(
+          team: Team.find_by(name: row['club_name']),
           player: player,
-          season: season
-        )
-        next unless ps
-
-        ps.update(
+          season: season,
           overall: row['overall'],
           potential: row['potential'],
           value_eur: row['value_eur'],
@@ -187,19 +217,11 @@ def sofifa_players(years)
       end
     end
   end
-  # Add errors to csv
-  save_player_errors(errors)
+  # Add errors to csv??
   puts "... created #{Player.count} players."
 end
 
-def save_player_errors(errors)
-  CSV.open("raw_data/errors.csv", 'wb') do |csv|
-    errors.each do |error|
-      csv << error
-    end
-  end
-end
-
 create_sofifa_teams(years)
-# fbref_players(years)
-# sofifa_players(years)
+update_teams_with_fbref(years)
+sofifa_players(years)
+fbref_players(years)

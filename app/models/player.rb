@@ -1,7 +1,7 @@
 class Player < ApplicationRecord
-  belongs_to :team, optional: true
   has_many :player_seasons, dependent: :destroy
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true
+  validates :sofifa_id, presence: true, uniqueness: true
 
   def age
     return '-' unless dob
