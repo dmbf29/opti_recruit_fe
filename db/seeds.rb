@@ -177,7 +177,7 @@ def sofifa_players(years)
     CSV.foreach(filepath, headers: :first_row) do |row|
       next if SKIP_TEAMS.include?(row['league_name'])
 
-      player = Player.create(
+      player = Player.where(
         position: row['player_positions'].split(', ').first,
         sofifa_id: row['sofifa_id'],
         player_url: row['player_url'],
@@ -186,8 +186,13 @@ def sofifa_players(years)
         preferred_foot: row['preferred_foot'],
         short_name: row['short_name'],
         long_name: row['long_name']
-      )
-      PlayerSeason.create(
+      ).first_or_create
+      if player.errors.any?
+        puts
+        p player.errors.full_messages
+        puts
+      end
+      PlayerSeason.where(
         team: Team.find_by(name: row['club_name']),
         player: player,
         season: season,
@@ -223,14 +228,14 @@ def sofifa_players(years)
         player_face_url: row['player_face_url'],
         heigh_cm: row['heigh_cm'],
         weight_kg: row['weight_kg']
-      )
+      ).first_or_create
     end
   end
   # Add errors to csv??
   puts "... created #{Player.count} players."
 end
 
-create_sofifa_teams(years)
+# create_sofifa_teams(years)
 # update_teams_with_fbref(years)
 sofifa_players(years)
 # fbref_players(years)

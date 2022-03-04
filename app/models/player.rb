@@ -1,6 +1,7 @@
 class Player < ApplicationRecord
   has_many :player_seasons, dependent: :destroy
-  validates :name, presence: true
+  validates :short_name, presence: true
+  validates :long_name, presence: true
   validates :sofifa_id, presence: true, uniqueness: true
 
   def age
