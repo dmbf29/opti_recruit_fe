@@ -2,7 +2,7 @@ require 'csv'
 # puts "Destroying all players..."
 # Player.destroy_all
 # years = [18, 19, 20, 21, 22]
-years = [21]
+years = [22, 21]
 SKIP_TEAMS = [
  "Chinese Super League",
  "Saudi Abdul L. Jameel League",
@@ -53,7 +53,6 @@ def create_sofifa_teams(years)
         club_flag_url: row['club_logo_url'],
         league: league
       ).first_or_create
-      print '*'
     end
   end
   puts "... created #{League.count} leagues"
@@ -68,6 +67,7 @@ def update_teams_with_fbref(years)
     puts "opening #{filepath}..."
 
     CSV.foreach(filepath, headers: :first_row) do |row|
+      next if SKIP_TEAMS.include?(row['league_name_sofifa'])
 
       league = League.find_by(name: row['league_name_sofifa'])
       until league
@@ -102,17 +102,24 @@ def fbref_players(years)
     ).first_or_create
 
     CSV.foreach(filepath, headers: :first_row) do |row|
+      next if SKIP_TEAMS.include?(row['league_name_sofifa'])
+
       team = Team.find_by(name: row['team']) || Team.find_by(alternate_name: row['team'])
 
-      player = team.players.find_by("short_name ~* ?", "^#{first_letter}\.* #{last_names}") || Player.find_by(name: row['long_name']) || Player.find_by(name: row['short_name']) # ||
+      first_letter = row['name'][0]
+      last_names = row['name'].split[1..-1].join(' ')
+      player = team.players.find_by("short_name ~* ?", "^#{first_letter}\.* #{last_names}") || team.players.find_by(name: row['name'])
+      until player
+        puts "** #{row['name']} ** Not found."
+        puts team.players.pluck(:short_name).join('  ')
+        print '> '
+        user_short_name = gets.chomp
+        player = team.players.find_by(short_name: user_short_name)
+        player&.update(name: row['name'])
+      end
 
-      player = Player.create(
-        name: row['name']
-      ).first_or_create
-
-      PlayerSeason.where(
-        player: player,
-        season: season,
+      ps = PlayerSeason.where(player: player, season: season)
+      ps.update(
         games: row['games'],
         minutes: row['minutes'],
         goals: row['goals'],
@@ -150,9 +157,8 @@ def fbref_players(years)
         crosses: row['crosses'],
         tackles_won: row['tackles_won'],
         aerials_won: row['aerials_won']
-      ).first_or_create
+      )
     end
-    print '*'
   end
   puts "... created #{Player.count} players."
 end
@@ -163,62 +169,61 @@ def sofifa_players(years)
   years.each do |year|
     filepath = "db/raw_data/players_#{year}.csv"
     next unless File.exist?(filepath)
-    puts "opening #{filepath}..."
 
     season = Season.where(
       year: "20#{year}"
     ).first_or_create
-
+    puts "opening #{filepath}..."
     CSV.foreach(filepath, headers: :first_row) do |row|
-        player = Player.create(
-          position: row['player_positions'].split(', ').first,
-          sofifa_id: row['sofifa_id'],
-          player_url: row['player_url'],
-          dob: row['dob'],
-          nationality_name: row['nationality_name'],
-          preferred_foot: row['preferred_foot'],
-          short_name: row['short_name'],
-          long_name: row['long_name']
-        )
-        PlayerSeason.create(
-          team: Team.find_by(name: row['club_name']),
-          player: player,
-          season: season,
-          overall: row['overall'],
-          potential: row['potential'],
-          value_eur: row['value_eur'],
-          wage_eur: row['wage_eur'],
-          international_reputation: row['international_reputation'],
-          release_cause_eur: row['release_cause_eur'],
-          pace: row['pace'],
-          shooting: row['shooting'],
-          passing: row['passing'],
-          dribbling: row['dribbling'],
-          defending: row['defending'],
-          physic: row['physic'],
-          attacking_crossing: row['attacking_crossing'],
-          attacking_heading_accuracy: row['attacking_heading_accuracy'],
-          attacking_short_passing: row['attacking_short_passing'],
-          skill_dribbling: row['skill_dribbling'],
-          skill_fk_accuracy: row['skill_fk_accuracy'],
-          skill_long_passing: row['skill_long_passing'],
-          skill_ball_control: row['skill_ball_control'],
-          movement_acceleration: row['movement_acceleration'],
-          movement_spring_speed: row['movement_spring_speed'],
-          power_shot_power: row['power_shot_power'],
-          power_jumping: row['power_jumping'],
-          power_stamina: row['power_stamina'],
-          power_strength: row['power_strength'],
-          power_long_shots: row['power_long_shots'],
-          defending_marking_awareness: row['defending_marking_awareness'],
-          defending_standing_tackle: row['defending_standing_tackle'],
-          defending_sliding_tackle: row['defending_sliding_tackle'],
-          player_face_url: row['player_face_url'],
-          heigh_cm: row['heigh_cm'],
-          weight_kg: row['weight_kg']
-        )
-        print '*'
-      end
+      next if SKIP_TEAMS.include?(row['league_name'])
+
+      player = Player.create(
+        position: row['player_positions'].split(', ').first,
+        sofifa_id: row['sofifa_id'],
+        player_url: row['player_url'],
+        dob: row['dob'],
+        nationality_name: row['nationality_name'],
+        preferred_foot: row['preferred_foot'],
+        short_name: row['short_name'],
+        long_name: row['long_name']
+      )
+      PlayerSeason.create(
+        team: Team.find_by(name: row['club_name']),
+        player: player,
+        season: season,
+        overall: row['overall'],
+        potential: row['potential'],
+        value_eur: row['value_eur'],
+        wage_eur: row['wage_eur'],
+        international_reputation: row['international_reputation'],
+        release_cause_eur: row['release_cause_eur'],
+        pace: row['pace'],
+        shooting: row['shooting'],
+        passing: row['passing'],
+        dribbling: row['dribbling'],
+        defending: row['defending'],
+        physic: row['physic'],
+        attacking_crossing: row['attacking_crossing'],
+        attacking_heading_accuracy: row['attacking_heading_accuracy'],
+        attacking_short_passing: row['attacking_short_passing'],
+        skill_dribbling: row['skill_dribbling'],
+        skill_fk_accuracy: row['skill_fk_accuracy'],
+        skill_long_passing: row['skill_long_passing'],
+        skill_ball_control: row['skill_ball_control'],
+        movement_acceleration: row['movement_acceleration'],
+        movement_spring_speed: row['movement_spring_speed'],
+        power_shot_power: row['power_shot_power'],
+        power_jumping: row['power_jumping'],
+        power_stamina: row['power_stamina'],
+        power_strength: row['power_strength'],
+        power_long_shots: row['power_long_shots'],
+        defending_marking_awareness: row['defending_marking_awareness'],
+        defending_standing_tackle: row['defending_standing_tackle'],
+        defending_sliding_tackle: row['defending_sliding_tackle'],
+        player_face_url: row['player_face_url'],
+        heigh_cm: row['heigh_cm'],
+        weight_kg: row['weight_kg']
+      )
     end
   end
   # Add errors to csv??
@@ -226,6 +231,6 @@ def sofifa_players(years)
 end
 
 create_sofifa_teams(years)
-update_teams_with_fbref(years)
+# update_teams_with_fbref(years)
 sofifa_players(years)
-fbref_players(years)
+# fbref_players(years)
