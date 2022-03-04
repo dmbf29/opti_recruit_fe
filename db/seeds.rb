@@ -200,6 +200,6 @@ def save_player_errors(errors)
   end
 end
 
-create_teams(years)
-fbref_players(years)
-sofifa_players(years)
+create_sofifa_teams(years)
+# fbref_players(years)
+# sofifa_players(years)
