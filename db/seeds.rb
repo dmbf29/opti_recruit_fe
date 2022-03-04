@@ -104,9 +104,12 @@ def fbref_players(years)
     CSV.foreach(filepath, headers: :first_row) do |row|
       team = Team.find_by(name: row['team']) || Team.find_by(alternate_name: row['team'])
 
+      player = team.players.find_by("short_name ~* ?", "^#{first_letter}\.* #{last_names}") || Player.find_by(name: row['long_name']) || Player.find_by(name: row['short_name']) # ||
+
       player = Player.create(
         name: row['name']
       ).first_or_create
+
       PlayerSeason.where(
         player: player,
         season: season,
