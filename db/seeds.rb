@@ -4,23 +4,49 @@ require 'csv'
 # years = [18, 19, 20, 21, 22]
 years = [21]
 
-def create_teams(years)
-  puts "Creating Teams..."
+def create_sofifa_teams(years)
+  puts "Creating Teams and Leagues..."
   years.each do |year|
     filepath = "db/raw_data/players_#{year}.csv"
     next unless File.exist?(filepath)
     puts "opening #{filepath}..."
 
     CSV.foreach(filepath, headers: :first_row) do |row|
+      league = League.where(
+        name: row['league_name'],
+        level: row['league_level']
+      ).first_or_create
+
       Team.where(
         name: row['club_name'],
         club_logo_url: row['club_name'],
-        club_flag_url: row['club_logo_url']
+        club_flag_url: row['club_logo_url'],
+        league: league
       ).first_or_create
       print '*'
     end
   end
-  puts "... created #{Team.count}"
+  puts "... created #{League.count} leagues"
+  puts "... created #{Team.count} teams"
+end
+
+def create_fbref_teams(years)
+  # puts "Creating Teams..."
+  # years.each do |year|
+  #   filepath = "db/raw_data/players_#{year}.csv"
+  #   next unless File.exist?(filepath)
+  #   puts "opening #{filepath}..."
+
+  #   CSV.foreach(filepath, headers: :first_row) do |row|
+  #     Team.where(
+  #       name: row['club_name'],
+  #       club_logo_url: row['club_name'],
+  #       club_flag_url: row['club_logo_url']
+  #     ).first_or_create
+  #     print '*'
+  #   end
+  # end
+  # puts "... created #{Team.count}"
 end
 
 def fbref_players(years)
