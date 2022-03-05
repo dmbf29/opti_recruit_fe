@@ -1,8 +1,9 @@
 class TeamsController < ApplicationController
+  skip_before_action :authenticate_user!, only: :search
 
   def search
     if params[:query].present?
-      @teams = Teams.where('name ILIKE :query OR alternate_name ILIKE :query', query: "%#{params[:query]}%").limit(3)
+      @teams = Team.where('name ILIKE :query OR alternate_name ILIKE :query', query: "%#{params[:query]}%").limit(3)
     else
       @teams = Team.order(:name).limit(3)
     end
