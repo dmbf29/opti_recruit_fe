@@ -4,13 +4,13 @@
 
 .search-form-control .btn {
   position: absolute;
-  top: 8px;
+  top: 0px;
   bottom: 8px;
   right: 8px;
 }
 
 .search-form-control .form-control {
-  height: 3.5rem;
+  // height: 3.5rem;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   border: 1px solid #E7E7E7;
   border-radius: 24px;
@@ -20,4 +20,15 @@
   border: 1px solid $blue;
   outline: none !important;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.navbar-lewagon-search {
+  width: 260px;
+}
+
+// Smallest device
+@media (min-width: 100px) and (max-width: 575px) {
+  .navbar-lewagon-search {
+    width: 150px;
+  }
 }

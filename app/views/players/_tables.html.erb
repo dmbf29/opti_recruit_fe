@@ -4,7 +4,7 @@
       <th scope="col">#</th>
       <th scope="col">NAME</th>
       <% if params[:controller] == 'players' && params[:action] == 'show' %>
-        <th scope="col">CLUB</th>
+        <th scope="col" class='d-none d-sm-table-cell'>CLUB</th>
       <% end %>
       <th scope="col" class='text-center'>AGE</th>
       <th scope="col" class='text-center'>POS</th>
@@ -19,9 +19,14 @@
     <% players.each_with_index do |player, index| %>
       <tr>
         <th scope="row"><%= index + 1 %></th>
-        <td><% if player.player_seasons.first&.player_face_url %><%= image_tag player.player_seasons.last&.player_face_url, width: 30 %><% end %> <%= player.name %></td>
+        <td class='d-flex align-items-center ellipsis'>
+          <% if player.last_player_season&.player_face_url %>
+            <%= image_tag player.player_seasons.last&.player_face_url, width: 30, class: "d-none d-sm-block" %>
+          <% end %>
+          <span class="ms-1 ellipsis"><%= player.name %></span>
+        </td>
         <% if params[:controller] == 'players' && params[:action] == 'show' %>
-          <td><%= player.team.name %></td>
+          <td class='d-none d-sm-table-cell'><%= player.team.name %></td>
         <% end %>
         <td class='text-center'><%= player.age %></td>
         <td class='text-center'><%= player.position %></td>
