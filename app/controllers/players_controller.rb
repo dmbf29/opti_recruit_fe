@@ -12,6 +12,7 @@ class PlayersController < ApplicationController
     @team = @player.team
     # @players = Player.includes(:player_seasons).where.not(id: @player).where.not(position: nil).where.not(team: @player.team).limit(10)
     # City.includes(:photos).where(photos: { city_id: nil })
-    @players = Player.includes(:player_seasons).where.not(id: @player).where.not(position: nil).where.not(player_seasons: { team_id: @player.team }).where.not(name: nil).limit(10)
+    @players = @player.search(params)
+    @positions = Player.pluck(:position).uniq.sort
   end
 end

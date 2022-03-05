@@ -1,0 +1,32 @@
+<div class='my-4 row filters'>
+  <div class="col-4">
+    <div class="input-group filter-label">
+      <span class="input-group-text">Age</span>
+      <input type="text" aria-label="First name" class="form-control" name='age_min' placeholder='min'>
+      <input type="text" aria-label="Last name" class="form-control" name='age_max' placeholder='max'>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="input-group filter-label">
+      <span class="input-group-text">€</span>
+      <input type="text" aria-label="First name" class="form-control" name='age_min' placeholder='min'>
+      <input type="text" aria-label="Last name" class="form-control" name='age_max' placeholder='max'>
+    </div>
+  </div>
+  <div class="col-4">
+    <% if false %>
+      <select name="states" data-controller="select2" data-select2-options-values='{ "tags": true, "width": "resolve" }' multiple="multiple" class="w-100">
+        <option value="">All</option>
+        <% @positions.each do |pos| %>
+          <option value=""><%= pos %></option>
+        <% end %>
+      </select>
+    <% end %>
+    <select class="form-select small-font" aria-label="Default select example">
+      <option <%= 'selected' unless params[:position] %> value="All">All</option>
+      <% @positions.each do |pos| %>
+        <option value="<%= pos %>" <%= 'selected' if params[:position] == pos %>><%= pos %></option>
+        <% end %>
+      </select>
+    </div>
+  </div>

@@ -1,0 +1,41 @@
+.filter-label {
+  border-color: $light-gray;
+  span {
+    background-color: $light-gray;
+    color: $dark-gray;
+    border-color: $light-gray;
+    font-weight: lighter;
+    font-size: 0.8em;
+  }
+  input {
+    border-color: $light-gray;
+    font-size: 0.8em;
+  }
+}
+
+.filters {
+  .select2-container--default .select2-selection--multiple {
+    background-color: transparent !important;
+  }
+  .small-font {
+    font-size: 0.8em;
+  }
+}
+.select2-dropdown {
+  background-color: $dark-gray !important;
+  color: $white !important;
+}
+
+.select2-container--default {
+  // border: 1px solid $light-gray !important;
+  font-size: 0.8em;
+}
+
+.select2-container--focus {
+  border: 1px solid $blue !important;
+}
+
+.select2-selection__choice {
+  background-color: $light-gray !important;
+  color: $dark-gray !important;
+}
