@@ -3,7 +3,7 @@ class Player < ApplicationRecord
   validates :short_name, presence: true
   validates :long_name, presence: true
   validates :sofifa_id, presence: true, uniqueness: true
-  # scope :team, -> { where(published: true) }
+  scope :order_unnamed, -> { includes(:player_seasons).where.not(name: nil).order("player_seasons.value_eur desc") }
 
   def not_empty
     Player.includes(:player_seasons).where.not(id: self).where.not(position: nil).where.not(player_seasons: { team_id: self.team }).where.not(name: nil)
