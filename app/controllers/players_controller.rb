@@ -3,7 +3,11 @@ class PlayersController < ApplicationController
 
   def index
     # @players = Player.includes(:player_seasons).limit(15)
-    @team = Team.find_by(id: params[:team_id]) || Team.find_by(name: "Liverpool")
+    if params[:team].present?
+      @team = Team.search_by_name(params[:team]).first || Team.find_by(name: "Liverpool")
+    else
+      @team = Team.find_by(id: params[:team_id]) || Team.find_by(name: "Liverpool")
+    end
     @players = @team.players.includes(:player_seasons).where.not(name: nil)
   end
 

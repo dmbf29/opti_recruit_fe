@@ -33,6 +33,7 @@ gem 'autoprefixer-rails', '10.2.5'
 gem 'devise'
 gem 'font-awesome-sass'
 gem 'httparty'
+gem 'pg_search', '~> 2.3.0'
 gem 'simple_form'
 
 
