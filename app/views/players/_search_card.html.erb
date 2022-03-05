@@ -1,0 +1,8 @@
+<% players.each do |player| %>
+  <li class='d-flex align-items-center'>
+    <%= link_to player_path(player), class: "dropdown-item" do %>
+      <%= image_tag player.last_player_season.player_face_url, width: '20px', height: '20px', class: 'me-1' %>
+      <%= player.short_name %>
+    <% end %>
+  </li>
+<% end %>

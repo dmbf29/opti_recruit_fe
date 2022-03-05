@@ -1,3 +1,8 @@
 <% teams.each do |team| %>
-  <li><%= link_to team.name, players_path(team_id: team.id), class: "dropdown-item" %></li>
+  <li class='d-flex align-items-center'>
+    <%= link_to players_path(team_id: team.id), class: "dropdown-item" do %>
+      <%= image_tag team.club_flag_url, width: '20px', height: '20px', class: 'me-1' %>
+      <%= team.name %>
+    <% end %>
+  </li>
 <% end %>

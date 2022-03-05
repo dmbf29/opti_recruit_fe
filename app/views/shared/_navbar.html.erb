@@ -9,7 +9,7 @@
     <div class="dropdown" data-controller='search'>
       <%= simple_form_for :team_id, url: players_path, method: :get, html: { class: 'navbar-lewagon-search', type: "button", id: "searchdropdown", 'data-bs-toggle': "dropdown", 'aria-expanded': "false", data: { search_target: 'form', action: 'focusin->search#clear' } } do |f| %>
         <div class="search-form-control form-group">
-          <input class="form-control string required" type="text" name="team" id="search_query" value="<%= @team&.name %>" data-search-target='input' data-action="keyup->search#update" />
+          <input class="form-control string required" type="text" name="team" id="search_query" value="<%= @team&.name %>" data-search-target='input' data-action="keyup->search#update" autocomplete="off" />
           <button name="button" type="submit" class="btn btn-flat">
             <i class="fas fa-search text-primary"></i>
           </button>
