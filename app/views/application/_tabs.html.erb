@@ -1,9 +1,26 @@
 <div class="row mt-4">
   <div class="col">
-    <div class="btn-group">
-      <%= link_to 'Squad', root_path, class: "btn btn-secondary #{'active' if active == 'squads'}" %>
-      <%= link_to 'Squad', player_path(Player&.first), class: "btn btn-secondary #{'active' if active == 'targets'}" %>
-      <%= link_to 'Search', '#', class: "btn btn-secondary #{'active' if active == 'search'}" %>
-    </div>
+    <% if false %>
+      <div class="btn-group">
+        <%= link_to 'Squad', root_path, class: "btn btn-secondary #{'active' if active == 'squads'}" %>
+        <%= link_to 'Targets', player_path(Player&.first), class: "btn btn-secondary #{'active' if active == 'targets'}" %>
+        <%= link_to 'Search', '#', class: "btn btn-secondary #{'active' if active == 'search'}" %>
+      </div>
+    <% end %>
+    <ul class="list-inline tabs-underlined">
+      <li>
+        <%= link_to 'Squad', players_path(team_id: @team.id), class: "tab-underlined #{'active' if active == 'squads'}" %>
+      </li>
+      <li>
+        <% if active == 'targets' %>
+          <%= link_to 'Targets', '#', class: "tab-underlined #{'active' if active == 'targets'}" %>
+        <% else %>
+          <%= link_to 'Targets', player_path(@team.players&.first), class: "tab-underlined" %>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to 'Search', '#', class: "tab-underlined #{'active' if active == 'search'}" %>
+      </li>
+    </ul>
   </div>
 </div>
