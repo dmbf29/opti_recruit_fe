@@ -1,0 +1,3 @@
+<% teams.each do |team| %>
+  <li><%= link_to team.name, players_path(team_id: team.id), class: "dropdown-item" %></li>
+<% end %>

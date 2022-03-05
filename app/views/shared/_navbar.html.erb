@@ -7,7 +7,7 @@
       <p class='text-primary'><strong>OptiRecruit</strong></p>
     </div>
     <div class="dropdown" data-controller='search'>
-      <%= simple_form_for :team_id, url: players_path, method: :get, html: { class: 'navbar-lewagon-search', type: "button", id: "searchdropdown", 'data-bs-toggle': "dropdown", 'aria-expanded': "false" } do |f| %>
+      <%= simple_form_for :team_id, url: players_path, method: :get, html: { class: 'navbar-lewagon-search', type: "button", id: "searchdropdown", 'data-bs-toggle': "dropdown", 'aria-expanded': "false", data: { search_target: 'form' } } do |f| %>
         <div class="search-form-control form-group">
           <input class="form-control string required" type="text" name="team" id="search_query" value="<%= @team&.name %>" data-search-target='input'/>
           <button name="button" type="submit" class="btn btn-flat">
