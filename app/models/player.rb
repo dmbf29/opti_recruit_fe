@@ -28,6 +28,14 @@ class Player < ApplicationRecord
   end
 
   def team
-    player_seasons.includes(:season).order("seasons.year desc").last.team
+    last_player_season.team
+  end
+
+  def last_player_season
+    player_seasons.includes(:season).order("seasons.year desc").last
+  end
+
+  def growth_potential
+    last_player_season.potential - last_player_season.overall
   end
 end

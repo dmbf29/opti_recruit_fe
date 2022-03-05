@@ -1,0 +1,9 @@
+<% if growth.zero? %>
+  -
+<% elsif growth <= 3 %>
+  <i class="bi bi-arrow-up-right text-success opacity-25"></i>
+<% elsif growth <= 5 %>
+  <i class="bi bi-arrow-up-right text-success opacity-75"></i>
+<% else %>
+  <i class="bi bi-arrow-up text-success"></i>
+<% end %>
