@@ -1,6 +1,7 @@
 class FetchProjectedService
   attr_reader :url
-  def initialize(attr = {})
+
+  def initialize(attrs = {})
     @url = ''
   end
 
