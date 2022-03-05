@@ -117,23 +117,26 @@ def fbref_players(years)
       first_letter = row['player'][0]
       last_names = row['player'].split[1..-1].join(' ')
       if last_names.blank?
-        player = team.players.find_by(short_name: row['player']) || league.players.find_by(name: row['player']) || league.players.find_by(short_name: row['player']) || team.players.find_by(name: row['player'])
+        player = team.players.find_by(short_name: row['player']) || league.players.find_by(name: row['player']) || league.players.find_by(short_name: row['player']) || team.players.find_by(name: row['player']) || Player.find_by("long_name ILIKE ?", "%#{row['player']}%")
       else
-        player = team.players.find_by("short_name ~* ?", "^#{first_letter}\.* #{last_names}") || team.players.find_by(short_name: row['player']) || team.players.find_by(name: row['player']) || league.players.find_by("short_name ~* ?", "^#{first_letter}\.* #{last_names}") || league.players.find_by(short_name: row['player']) || league.players.find_by(name: row['player'])
+        player = team.players.find_by("short_name ~* ?", "^#{first_letter}\.* #{last_names}") || team.players.find_by(short_name: row['player']) || team.players.find_by(name: row['player']) || league.players.find_by("short_name ~* ?", "^#{first_letter}\.* #{last_names}") || league.players.find_by(short_name: row['player']) || league.players.find_by(name: row['player']) || league.players.find_by("long_name ILIKE ?", "%#{row['player'].split[0]}%#{row['player'].split[1]}") || Player.find_by("long_name ILIKE ?", "%#{row['player']}%")
       end
       player&.update(name: row['player'])
       next unless player
 
       # until player || user_short_name == 'skip'
       #   user_short_name = nil
-      #   puts team.players.order(:short_name).pluck(:short_name).join('  ')
+      #   shorts = team.players.order(:short_name).pluck(:short_name).join('  ')
+      #   longs = team.players.order(:long_name).pluck(:long_name).join('  ')
+      #   puts shorts
       #   puts ' - or - '
-      #   puts team.players.order(:long_name).pluck(:long_name).join('  ')
+      #   puts longs
       #   puts
       #   puts "** #{row['player']} ** Not found."
       #   print '> '
       #   user_short_name = gets.chomp
-      #   player = team.players.find_by(short_name: user_short_name) || team.players.find_by(long_name: user_short_name)
+      #   player = team.players.find_by(short_name: user_short_name) || team.players.find_by(long_name: user_short_name) || Player.find_by(long_name: user_short_name)
+      #   p player
       #   player&.update(name: row['player'])
       # end
 
