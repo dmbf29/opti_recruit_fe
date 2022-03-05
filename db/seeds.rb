@@ -69,6 +69,7 @@ def update_teams_with_fbref(years)
     next unless File.exist?(filepath)
     puts "opening #{filepath}..."
 
+    user_team = nil
     CSV.foreach(filepath, headers: :first_row) do |row|
       next if SKIP_TEAMS.include?(row['league_name_sofifa'])
 
@@ -80,10 +81,10 @@ def update_teams_with_fbref(years)
         league = League.find_by(name: user_league)
       end
 
-      team = Team.find_by(name: row['team']) || Team.find_by(alternate_name: row['team'])
-      until team
+      team = Team.find_by(name: row['team']) || Team.find_by(alternate_name: row['team']) || Team.find_by(name: 'FC ' + row['team']) || Team.find_by(name: 'SC ' + row['team']) || Team.find_by(name: row['team'] + ' FC') || Team.find_by(name: row['team'] + ' SC')
+      until team || user_team == 'skip'
         puts "** #{row['team']} ** Not found."
-        puts league.teams.pluck(:name).join('  ')
+        puts league.teams.order(:name).pluck(:name).join('  ')
         print '> '
         user_team = gets.chomp
         team = Team.find_by(name: user_team)
@@ -108,18 +109,33 @@ def fbref_players(years)
       next if SKIP_TEAMS.include?(row['league_name_sofifa'])
 
       team = Team.find_by(name: row['team']) || Team.find_by(alternate_name: row['team'])
+      next unless team
 
-      first_letter = row['name'][0]
-      last_names = row['name'].split[1..-1].join(' ')
-      player = team.players.find_by("short_name ~* ?", "^#{first_letter}\.* #{last_names}") || team.players.find_by(name: row['name'])
-      until player
-        puts "** #{row['name']} ** Not found."
-        puts team.players.pluck(:short_name).join('  ')
-        print '> '
-        user_short_name = gets.chomp
-        player = team.players.find_by(short_name: user_short_name)
-        player&.update(name: row['name'])
+      league = team.league
+      user_short_name = nil
+
+      first_letter = row['player'][0]
+      last_names = row['player'].split[1..-1].join(' ')
+      if last_names.blank?
+        player = team.players.find_by(short_name: row['player']) || league.players.find_by(name: row['player']) || league.players.find_by(short_name: row['player']) || team.players.find_by(name: row['player'])
+      else
+        player = team.players.find_by("short_name ~* ?", "^#{first_letter}\.* #{last_names}") || team.players.find_by(short_name: row['player']) || team.players.find_by(name: row['player']) || league.players.find_by("short_name ~* ?", "^#{first_letter}\.* #{last_names}") || league.players.find_by(short_name: row['player']) || league.players.find_by(name: row['player'])
       end
+      player&.update(name: row['player'])
+      next unless player
+
+      # until player || user_short_name == 'skip'
+      #   user_short_name = nil
+      #   puts team.players.order(:short_name).pluck(:short_name).join('  ')
+      #   puts ' - or - '
+      #   puts team.players.order(:long_name).pluck(:long_name).join('  ')
+      #   puts
+      #   puts "** #{row['player']} ** Not found."
+      #   print '> '
+      #   user_short_name = gets.chomp
+      #   player = team.players.find_by(short_name: user_short_name) || team.players.find_by(long_name: user_short_name)
+      #   player&.update(name: row['player'])
+      # end
 
       ps = PlayerSeason.where(player: player, season: season)
       ps.update(
@@ -239,5 +255,5 @@ end
 
 # create_sofifa_teams(years)
 # update_teams_with_fbref(years)
-sofifa_players(years)
-# fbref_players(years)
+# sofifa_players(years)
+fbref_players(years)

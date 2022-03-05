@@ -27,7 +27,7 @@
         <td class='text-center'>€<%= player.player_seasons.last&.wage_eur&.fdiv(1000)&.round %>K</td>
         <% if params[:controller] == 'players' && params[:action] == 'index' %>
           <td>
-            <%= link_to player_path(player), class: 'text-secondary' do %>
+            <%= link_to player_path(player), class: 'text-primary' do %>
               <i class="fas fa-search"></i>
             <% end %>
           </td>

@@ -1,14 +1,21 @@
 <div class="row justify-content-center">
   <div class="col">
     <div class="d-flex justify-content-between">
-      <h1>OptiRecruit</h1>
-      <div class="d-flex text-center">
-        <div>
-          <p>Liverpool F.C.</p>
-          <small>Technical Director</small>
-        </div>
-        <%= image_tag 'https://logoeps.com/wp-content/uploads/2011/08/liverpool-logo-vector.png', width: '40px', height: '40px', class: 'ms-1' %>
+      <div>
+        <h1 class="text-white d-flex align-items-center">
+          <%= image_tag @team.club_flag_url, width: '40px', height: '40px', class: 'me-1' %>
+          <%= @team.name %>
+        </h1>
       </div>
+      <% if false %>
+        <div class="d-flex text-center">
+          <div>
+            <p>Liverpool F.C.</p>
+            <small>Player Recruitment</small>
+          </div>
+          <%= image_tag 'https://logoeps.com/wp-content/uploads/2011/08/liverpool-logo-vector.png', width: '40px', height: '40px', class: 'ms-1' %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
