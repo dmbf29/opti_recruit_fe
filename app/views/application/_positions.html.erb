@@ -1,0 +1,7 @@
+<div class="btn-group">
+  <%= link_to 'All', players_path, class: "btn border-light #{'btn-secondary active' if params['position'].blank? }" %>
+  <%= link_to 'FW', players_path(position: 'FW'), class: "btn border-light #{'btn-secondary active' if params['position'] == 'FW'}" %>
+  <%= link_to 'MF', players_path(position: 'MF'), class: "btn border-light #{'btn-secondary active' if params['position'] == 'MF'}" %>
+  <%= link_to 'DF', players_path(position: 'DF'), class: "btn border-light #{'btn-secondary active' if params['position'] == 'DF'}" %>
+  <%= link_to 'GK', players_path(position: 'GK'), class: "btn border-light #{'btn-secondary active' if params['position'] == 'GK'}" %>
+</div>

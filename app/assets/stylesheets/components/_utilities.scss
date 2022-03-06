@@ -8,6 +8,10 @@ p {
   text-overflow: ellipsis;
 }
 
+.border-light:hover {
+  color: $primary;
+}
+
 @media (min-width: 100px) and (max-width: 575px) {
   .ellipsis {
     max-width: 148px;

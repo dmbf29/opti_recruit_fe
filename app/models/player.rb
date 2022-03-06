@@ -38,4 +38,39 @@ class Player < ApplicationRecord
   def growth_potential
     last_player_season.potential - last_player_season.overall
   end
+
+  def self.fw
+    ['LW', 'ST', 'CF', 'RW']
+  end
+
+  def self.mf
+    ["LM", "CAM", "CDM", "CM", "RM"]
+  end
+
+  def self.df
+    ["CB", "LB", "RB", "LWB", "RWB"]
+  end
+
+  def self.gk
+    ['GK']
+  end
+
+  def self.positions(position)
+    case position
+    when 'FW' then fw
+    when 'MF' then mf
+    when 'DF' then df
+    when 'GK' then gk
+    end
+  end
+
+  # def position_group
+  #   if position[-1] == 'B'
+  #     'DF'
+  #   elsif position[-1] == 'B'
+
+  #   elsif position == 'GK'
+
+  #   end
+  # end
 end

@@ -1,7 +1,11 @@
 <table class="table table-hover table-borderless sortable">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <% if params[:controller] == 'players' && params[:action] == 'index' %>
+        <th scope="col"> </th>
+      <% else %>
+        <th scope="col">#</th>
+      <% end %>
       <th scope="col">NAME</th>
       <% if params[:controller] == 'players' && params[:action] == 'show' %>
         <th scope="col" class='d-none d-sm-table-cell'>CLUB</th>
@@ -10,15 +14,20 @@
       <th scope="col" class='text-center'>POS</th>
       <th scope="col" class='text-center'>GROW</th>
       <th scope="col" class='text-center'>VAL</th>
-      <% if params[:controller] == 'players' && params[:action] == 'index' %>
-        <th scope="col"> </th>
-      <% end %>
     </tr>
   </thead>
   <tbody>
     <% players.each_with_index do |player, index| %>
       <tr>
-        <th scope="row"><%= index + 1 %></th>
+        <% if params[:controller] == 'players' && params[:action] == 'index' %>
+          <th scope="row" class='align-middle text-center'>
+            <%= link_to player_path(player, position: player.position), class: 'text-primary' do %>
+              <i class="fas fa-search"></i>
+            <% end %>
+          </th>
+        <% else %>
+          <th scope="row"><%= index + 1 %></th>
+        <% end %>
         <td class='d-flex align-items-center ellipsis'>
           <% if player.last_player_season&.player_face_url %>
             <%= image_tag player.player_seasons.last&.player_face_url, width: 30, class: "d-none d-sm-block" %>
@@ -31,14 +40,7 @@
         <td class='text-center'><%= player.age %></td>
         <td class='text-center'><%= player.position %></td>
         <td class='text-center'><%= render 'players/growth_icon', growth: player.growth_potential %> </td>
-        <td class='text-center'>€<%= player.player_seasons.last&.value_eur&.fdiv(1000000)&.round %>M</td>
-        <% if params[:controller] == 'players' && params[:action] == 'index' %>
-          <td>
-            <%= link_to player_path(player, position: player.position), class: 'text-primary' do %>
-              <i class="fas fa-search"></i>
-            <% end %>
-          </td>
-        <% end %>
+        <td class='text-center'>€<%= player.last_player_season&.value_eur&.fdiv(1000000)&.round %>M</td>
       </tr>
     <% end %>
   </tbody>

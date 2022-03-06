@@ -7,7 +7,11 @@ class PlayersController < ApplicationController
     else
       @team = Team.find_by(id: params[:team_id]) || Team.find_by(name: "Liverpool")
     end
-    @players = @team.players.order_unnamed
+    if params[:position].present?
+      @players = @team.players.order_unnamed.where(position: Player.positions(params[:position]))
+    else
+      @players = @team.players.order_unnamed
+    end
   end
 
   def show
