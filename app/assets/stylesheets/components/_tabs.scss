@@ -7,11 +7,11 @@
   color: $primary;
   padding: 8px;
   margin: 8px;
-  opacity: .4;
+  opacity: .5;
   cursor: pointer;
   text-decoration: none;
   border-bottom: 4px solid transparent;
-  font-weight: lighter;
+  // font-weight: lighter;
   &:hover {
     opacity: 1;
   }

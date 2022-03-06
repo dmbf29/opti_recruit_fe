@@ -1,10 +1,9 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <div class="container-fluid">
     <div class="d-flex align-items-center">
-      <%= link_to root_path, class: "navbar-brand me-1" do %>
-        <%= image_tag "logo.png" %>
+      <%= link_to root_path, class: "navbar-brand ms-2" do %>
+        <%= image_tag "recruit.png" %>
       <% end %>
-      <p class='text-primary'><strong>OptiRecruit</strong></p>
     </div>
     <div class="dropdown" data-controller='search'>
       <%= simple_form_for :team_id, url: players_path, method: :get, html: { class: 'navbar-lewagon-search', type: "button", id: "searchdropdown", 'data-bs-toggle': "dropdown", 'aria-expanded': "false", data: { search_target: 'form', action: 'focusin->search#clear' } } do |f| %>
