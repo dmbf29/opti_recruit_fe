@@ -203,7 +203,7 @@ def sofifa_players(years)
         position: row['player_positions'].split(', ').first,
         sofifa_id: row['sofifa_id'],
         player_url: row['player_url'],
-        dob: row['dob'],
+        dob: Date.parse(row['dob']),
         nationality_name: row['nationality_name'],
         preferred_foot: row['preferred_foot'],
         short_name: row['short_name'],

@@ -15,6 +15,10 @@ class PlayersController < ApplicationController
     @team = @player.team
     @players = @player.search(params)
     @positions = Player.pluck(:position).uniq.sort
+    respond_to do |format|
+      format.html
+      format.text { render partial: 'players/tables', locals: { players: @players }, formats: [:html] }
+    end
   end
 
   def search

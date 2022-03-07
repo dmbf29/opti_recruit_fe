@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_04_131606) do
+ActiveRecord::Schema.define(version: 2022_03_07_104916) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(version: 2022_03_04_131606) do
     t.string "position"
     t.integer "sofifa_id"
     t.string "player_url"
-    t.string "dob"
+    t.date "dob"
     t.string "nationality_name"
     t.string "preferred_foot"
     t.datetime "created_at", precision: 6, null: false
