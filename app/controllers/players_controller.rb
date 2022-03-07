@@ -2,11 +2,7 @@ class PlayersController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show, :search]
 
   def index
-    if params[:team].present?
-      @team = Team.search_by_name(params[:team]).first || Team.find_by(name: "Liverpool")
-    else
-      @team = Team.find_by(id: params[:team_id]) || Team.find_by(name: "Liverpool")
-    end
+    @team = Team.find_by(id: params[:team_id]) || Team.find_by(name: "Liverpool")
     if params[:position].present?
       @players = @team.players.order_unnamed.where(position: Player.positions(params[:position]))
     else
