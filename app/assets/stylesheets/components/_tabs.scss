@@ -21,3 +21,12 @@
   opacity: 1;
   border-bottom: 3px solid $primary;
 }
+
+// Smallest device
+@media (min-width: 100px) and (max-width: 575px) {
+  .tabs-underlined {
+    .tab-underlined {
+      font-size: 0.8em;
+    }
+  }
+}

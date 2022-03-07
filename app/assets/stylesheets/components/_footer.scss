@@ -27,3 +27,10 @@
   color: $regular-gray;
   opacity: 0.8;
 }
+
+// Smallest device
+@media (min-width: 100px) and (max-width: 575px) {
+  .footer-copyright {
+    font-size: 0.6em;
+  }
+}

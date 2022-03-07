@@ -39,3 +39,18 @@
   background-color: $light-gray !important;
   color: $dark-gray !important;
 }
+
+.btn-group {
+    a {
+      font-size: 0.9em;
+    }
+  }
+
+// Smallest device
+@media (min-width: 100px) and (max-width: 575px) {
+  .btn-group {
+    a {
+      font-size: 0.7em;
+    }
+  }
+}
