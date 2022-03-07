@@ -2,15 +2,15 @@
   <div class="col-12 col-sm-4 my-1 my-sm-0">
     <div class="input-group filter-label">
       <span class="input-group-text">Age</span>
-      <input type="text" aria-label="First name" class="form-control" name='age_min' placeholder='min' data-filter-target='age_min' data-action='keyup->filter#update'>
-      <input type="text" aria-label="Last name" class="form-control" name='age_max' placeholder='max' data-filter-target='age_max' data-action='keyup->filter#update'>
+      <input type="number" min="16" max="60" aria-label="First name" class="form-control" name='age_min' placeholder='min' data-filter-target='age_min' data-action='keyup->filter#update' autocomplete='off'>
+      <input type="number" min="17" max="60" aria-label="Last name" class="form-control" name='age_max' placeholder='max' data-filter-target='age_max' data-action='keyup->filter#update' autocomplete='off'>
     </div>
   </div>
   <div class="col-12 col-sm-4 my-1 my-sm-0">
     <div class="input-group filter-label">
       <span class="input-group-text">€</span>
-      <input type="text" aria-label="First name" class="form-control" name='age_min' placeholder='min' data-filter-target='value_min' data-action='keyup->filter#update'>
-      <input type="text" aria-label="Last name" class="form-control" name='age_max' placeholder='max' data-filter-target='value_max' data-action='keyup->filter#update'>
+      <input type="number" min="" max="" step="10000"aria-label="First name" class="form-control" name='value_min' placeholder='min' data-filter-target='value_min' data-action='keyup->filter#update' autocomplete='off'>
+      <input type="number" min="" max="" step="10000"aria-label="Last name" class="form-control" name='value_max' placeholder='max' data-filter-target='value_max' data-action='keyup->filter#update' autocomplete='off'>
     </div>
   </div>
   <div class="col-12 col-sm-4 my-1 my-sm-0">
@@ -23,7 +23,7 @@
       </select>
     <% end %>
     <select class="form-select small-font" aria-label="Default select example" data-filter-target='position' data-action='change->filter#update'>
-      <option <%= 'selected' unless params[:position] %> value="All">All</option>
+      <option <%= 'selected' unless params[:position] %> value="">All</option>
       <% @positions.each do |pos| %>
         <option value="<%= pos %>" <%= 'selected' if params[:position] == pos %>><%= pos %></option>
         <% end %>
