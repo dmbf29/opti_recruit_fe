@@ -1,0 +1,29 @@
+.footer {
+  background: $dark-gray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+  padding: 0px 50px;
+  color: $regular-gray;
+  a {
+    color: $light-gray;
+    text-decoration: none;
+    padding: 0px 10px;
+  }
+  a:hover {
+    opacity: 1;
+    color: $regular-gray;
+  }
+}
+.footer-links {
+  display: flex;
+  align-items: center;
+  font-size: 24px !important;
+  opacity: 0.5;
+}
+
+.footer-copyright {
+  color: $regular-gray;
+  opacity: 0.8;
+}

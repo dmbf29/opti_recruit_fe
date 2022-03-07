@@ -18,7 +18,10 @@
   <body>
     <%= render 'shared/navbar' %>
     <%= render 'shared/flashes' %>
-    <%= yield %>
+    <div class="content">
+      <%= yield %>
+    </div>
+    <%= render 'shared/footer' %>
     <script src="https://tofsjonas.github.io/sortable/sortable.js"></script>
   </body>
 </html>
