@@ -1,19 +1,19 @@
 <div class='my-4 row filters' data-controller='filter' data-filter-player-id-value="<%= @player.id %>">
-  <div class="col-4">
+  <div class="col-12 col-sm-4 my-1 my-sm-0">
     <div class="input-group filter-label">
       <span class="input-group-text">Age</span>
       <input type="text" aria-label="First name" class="form-control" name='age_min' placeholder='min' data-filter-target='age_min' data-action='keyup->filter#update'>
       <input type="text" aria-label="Last name" class="form-control" name='age_max' placeholder='max' data-filter-target='age_max' data-action='keyup->filter#update'>
     </div>
   </div>
-  <div class="col-4">
+  <div class="col-12 col-sm-4 my-1 my-sm-0">
     <div class="input-group filter-label">
       <span class="input-group-text">€</span>
       <input type="text" aria-label="First name" class="form-control" name='age_min' placeholder='min' data-filter-target='value_min' data-action='keyup->filter#update'>
       <input type="text" aria-label="Last name" class="form-control" name='age_max' placeholder='max' data-filter-target='value_max' data-action='keyup->filter#update'>
     </div>
   </div>
-  <div class="col-4">
+  <div class="col-12 col-sm-4 my-1 my-sm-0">
     <% if false %>
       <select name="states" data-controller="select2" data-select2-options-values='{ "tags": true, "width": "resolve" }' multiple="multiple" class="w-100" data-filter-target='position'>>
         <option value="">All</option>
