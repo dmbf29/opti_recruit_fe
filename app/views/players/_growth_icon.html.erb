@@ -1,9 +1,13 @@
-<% if growth.zero? %>
-  -
-<% elsif growth <= 3 %>
-  <i class="bi bi-arrow-up-right text-success opacity-25"></i>
-<% elsif growth <= 5 %>
-  <i class="bi bi-arrow-up-right text-success opacity-75"></i>
-<% else %>
-  <i class="bi bi-arrow-up text-success"></i>
-<% end %>
+<div data-controller='tool-tip'>
+  <% if growth.zero? %>
+    <%= image_tag 'bars_0.png', width: 24, 'data-bs-toggle': "tooltip", 'data-bs-placement': "top", title: "Growth potential: #{growth}" %>
+  <% elsif growth <= 2 %>
+    <%= image_tag 'bars_1.png', width: 24, 'data-bs-toggle': "tooltip", 'data-bs-placement': "top", title: "Growth potential: #{growth}" %>
+  <% elsif growth <= 4 %>
+    <%= image_tag 'bars_2.png', width: 24, 'data-bs-toggle': "tooltip", 'data-bs-placement': "top", title: "Growth potential: #{growth}" %>
+  <% elsif growth <= 6 %>
+    <%= image_tag 'bars_3.png', width: 24, 'data-bs-toggle': "tooltip", 'data-bs-placement': "top", title: "Growth potential: #{growth}" %>
+  <% else %>
+    <%= image_tag 'bars_4.png', width: 24, 'data-bs-toggle': "tooltip", 'data-bs-placement': "top", title: "Growth potential: #{growth}" %>
+  <% end %>
+</div>

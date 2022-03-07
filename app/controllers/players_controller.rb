@@ -13,7 +13,7 @@ class PlayersController < ApplicationController
   def show
     @player = Player.find(params[:id])
     @team = @player.team
-    @players = @player.search(params).order_unnamed
+    @players = @player.search(params)
     @positions = Player.pluck(:position).uniq.sort
   end
 
