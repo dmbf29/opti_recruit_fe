@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
+window.bootstrap = require("bootstrap")
 
 export default class extends Controller {
 

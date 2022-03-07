@@ -129,14 +129,4 @@ class Player < ApplicationRecord
     when 'GK' then gk
     end
   end
-
-  # def position_group
-  #   if position[-1] == 'B'
-  #     'DF'
-  #   elsif position[-1] == 'B'
-
-  #   elsif position == 'GK'
-
-  #   end
-  # end
 end
