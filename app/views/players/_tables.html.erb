@@ -7,12 +7,12 @@
         <th scope="col">#</th>
       <% end %>
       <th scope="col">NAME</th>
-      <% if params[:controller] == 'players' && params[:action] == 'show' %>
-        <th scope="col" class='d-none d-sm-table-cell'>CLUB</th>
-      <% end %>
       <th scope="col" class='text-center'>AGE</th>
       <th scope="col" class='text-center'>POS</th>
       <th scope="col" class='text-center'>GROW</th>
+      <% if params[:controller] == 'players' && params[:action] == 'show' %>
+        <th scope="col" class='text-center'>MATCH</th>
+      <% end %>
       <th scope="col" class='text-center'>VAL</th>
     </tr>
   </thead>
@@ -32,14 +32,19 @@
           <% if player.last_player_season&.player_face_url %>
             <%= image_tag player.player_seasons.last&.player_face_url, width: 30, class: "d-none d-sm-block" %>
           <% end %>
-          <span class="ms-1 ellipsis"><%= player.name %></span>
+          <div>
+            <span class="ms-1 ellipsis"><%= player.name %></span>
+            <% if params[:controller] == 'players' && params[:action] == 'show' %>
+              <small class='ps-1 d-none d-sm-table-cell text-secondary'><%= player.team.name %></small>
+            <% end %>
+          </div>
         </td>
-        <% if params[:controller] == 'players' && params[:action] == 'show' %>
-          <td class='d-none d-sm-table-cell'><%= player.team.name %></td>
-        <% end %>
         <td class='text-center'><%= player.age %></td>
         <td class='text-center'><%= player.position %></td>
         <td class='text-center'><%= render 'players/growth_icon', growth: player.growth_potential %> </td>
+        <% if params[:controller] == 'players' && params[:action] == 'show' %>
+          <td class='text-center text-primary fw-normal'><%= "#{(99 - index)}.#{rand(0..99)}" %></td>
+        <% end %>
         <td class='text-center'>€<%= player.last_player_season&.value_eur&.fdiv(1000000)&.round %>M</td>
       </tr>
     <% end %>
