@@ -45,7 +45,7 @@
         <% if params[:controller] == 'players' && params[:action] == 'show' && players.length > 1 %>
           <td class='text-center text-primary fw-normal'><%= "#{(99 - index)}.#{rand(0..99)}" %></td>
         <% end %>
-        <td class='text-center'>€<%= player.last_player_season&.value_eur&.fdiv(1000000)&.round %>M</td>
+        <td class='text-center'>€<%= player.last_player_season&.value_eur&.fdiv(1000000)&.round(2) %>M</td>
       </tr>
     <% end %>
   </tbody>
