@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_10_102809) do
+ActiveRecord::Schema.define(version: 2022_03_10_110445) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 2022_03_10_102809) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "short_name"
     t.string "long_name"
+    t.float "match"
   end
 
   create_table "seasons", force: :cascade do |t|
