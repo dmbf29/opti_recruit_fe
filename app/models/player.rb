@@ -3,10 +3,15 @@ class Player < ApplicationRecord
   validates :short_name, presence: true
   validates :long_name, presence: true
   validates :sofifa_id, presence: true, uniqueness: true
-  scope :order_unnamed, -> { includes(:player_seasons).where.not(name: nil).order("player_seasons.value_eur desc") }
+  # scope :order_unnamed, -> { includes(:player_seasons).where.not(name: nil).order("player_seasons.value_eur desc") }
+  # scope :order_by_value, -> { order("player_seasons.value_eur desc") }
   scope :for_age_range, -> min, max { where("date_part('year', age(dob)) >= ? AND date_part('year', age(dob)) <= ?", min, max) }
   scope :for_age_min, -> min { where("date_part('year', age(dob)) >= ?", min) }
   scope :for_age_max, -> max { where("date_part('year', age(dob)) <= ?", max) }
+
+  def self.order_by_value(team, season)
+    joins(:player_seasons).where(player_seasons: { team: team, season: season }).order('player_seasons.value_eur_proj_next desc').uniq
+  end
 
   def not_empty
     Player.includes(:player_seasons).where.not(id: self).where.not(position: nil).where.not(player_seasons: { team_id: self.team }).where.not(name: nil)

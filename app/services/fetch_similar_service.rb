@@ -16,7 +16,7 @@ class FetchSimilarService
   def call
     response = HTTParty.get(url).body
     players = JSON.parse(response)
-    players.map do |hash|
+    players.first(20).map do |hash|
       player = Player.find_by(sofifa_id: hash['sofifa_id'])
       player.match = hash['score']
       player

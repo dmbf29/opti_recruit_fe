@@ -4,9 +4,10 @@ class PlayersController < ApplicationController
   def index
     @team = Team.find_by(id: params[:team_id]) || Team.find_by(name: "Liverpool")
     if params[:position].present?
-      @players = @team.players.order_unnamed.where(position: Player.positions(params[:position]))
+      # @players = @team.players.order_unnamed.where(position: Player.positions(params[:position]))
+      @players = Player.order_by_value(@team, @season)
     else
-      @players = @team.players.order_unnamed
+      @players = Player.order_by_value(@team, @season)
     end
   end
 
