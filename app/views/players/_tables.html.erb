@@ -30,7 +30,7 @@
           <th scope="row"><%= index + 1 %></th>
         <% end %>
         <td class='d-flex align-items-center ellipsis'>
-          <% if player.last_player_season&.player_face_url %>
+          <% if player.player_season_of(@season)&.player_face_url %>
             <%= image_tag player.player_seasons.last&.player_face_url, width: 30, class: "d-none d-sm-block" %>
           <% end %>
           <div>
@@ -46,8 +46,8 @@
         <% if params[:controller] == 'players' && params[:action] == 'show' && players.length > 1 %>
           <td class='text-center text-primary fw-normal'><%= player.match %></td>
         <% end %>
-        <td class='text-center'><%= value_eur_display(player.last_player_season&.value_eur) %></td>
-        <td class='text-center text-info'><%= value_eur_display(player.last_player_season&.value_eur_proj_next) %></td>
+        <td class='text-center'><%= value_eur_display(player.player_season_of(@season)&.value_eur) %></td>
+        <td class='text-center text-info'><%= value_eur_display(player.player_season_of(@season)&.value_eur_proj_next) %></td>
       </tr>
     <% end %>
   </tbody>

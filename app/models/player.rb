@@ -103,6 +103,10 @@ class Player < ApplicationRecord
     last_player_season.team
   end
 
+  def player_season_of(season)
+    player_seasons.find_by(season: season) || player_seasons.first
+  end
+
   def last_player_season
     player_seasons.includes(:season).order("seasons.year asc").last
   end
