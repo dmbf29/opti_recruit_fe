@@ -17,6 +17,8 @@ module OptiRecruitFe
     config.load_defaults 6.1
     config.hosts << /.+\.ngrok\.io/
     config.hosts << "opti-recruit.herokuapp.com"
+    config.hosts << "www.optirecruit.com"
+    config.hosts << "optirecruit.com"
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
