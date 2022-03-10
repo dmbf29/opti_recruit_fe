@@ -14,7 +14,7 @@
         <th scope="col" class='text-center'>MATCH</th>
       <% end %>
       <th scope="col" class='text-center'>MARKET VAL</th>
-      <th scope="col" class='text-center'>PREDICTED VAL</th>
+      <th scope="col" class='text-center'>PRED VAL</th>
     </tr>
   </thead>
   <tbody>
@@ -47,7 +47,7 @@
           <td class='text-center text-primary fw-normal'><%= "#{(99 - index)}.#{rand(0..99)}" %></td>
         <% end %>
         <td class='text-center'><%= value_eur_display(player.last_player_season&.value_eur) %></td>
-        <td class='text-center'><%= value_eur_display(player.last_player_season&.value_eur_proj_next) %></td>
+        <td class='text-center text-info'><%= value_eur_display(player.last_player_season&.value_eur_proj_next) %></td>
       </tr>
     <% end %>
   </tbody>
