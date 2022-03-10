@@ -14,10 +14,10 @@ class PlayersController < ApplicationController
     @player = Player.find(params[:id])
     @team = @player.team
     @positions = Player.pluck(:position).uniq.sort
-    # @players = @player.search(params)
+    # @players = @player.search(params) # without API
     @players = FetchSimilarService.new(
       sofifa_id: @player.sofifa_id,
-      position: params[:position].blank? ? @player.position : params[:position],
+      position: params[:position].blank? ? 'All' : params[:position],
       params: params
     ).call
     respond_to do |format|

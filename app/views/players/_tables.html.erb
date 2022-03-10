@@ -22,7 +22,7 @@
       <tr>
         <% if params[:controller] == 'players' && params[:action] == 'index' %>
           <th scope="row" class='align-middle text-center'>
-            <%= link_to player_path(player, position: player.position), class: 'text-primary' do %>
+            <%= link_to player_path(player), class: 'text-primary' do %>
               <i class="fas fa-search"></i>
             <% end %>
           </th>
@@ -34,7 +34,7 @@
             <%= image_tag player.player_seasons.last&.player_face_url, width: 30, class: "d-none d-sm-block" %>
           <% end %>
           <div>
-            <span class="ms-1 ellipsis"><%= player.name %></span>
+            <span class="ms-1 ellipsis"><%= player.name || player.long_name %></span>
             <% if params[:controller] == 'players' && params[:action] == 'show' %>
               <small class='ps-1 d-none d-sm-table-cell text-secondary'><%= player.team.name %></small>
             <% end %>

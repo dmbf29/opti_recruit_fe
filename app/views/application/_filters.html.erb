@@ -24,9 +24,9 @@
       </select>
     <% end %>
     <select class="form-select small-font" aria-label="Default select example" data-filter-target='position' data-action='change->filter#update'>
-      <option <%= 'selected' unless params[:position] %> value="">All</option>
+      <option <%= 'selected' unless params[:position] %> value="All">All</option>
       <% @positions.each do |pos| %>
-        <option value="<%= pos %>" <%= 'selected' if params[:position] == pos || @player.position == pos %>><%= pos %></option>
+        <option value="<%= pos %>" <%= 'selected' if params[:position] == pos %>><%= pos %></option>
         <% end %>
       </select>
     </div>
