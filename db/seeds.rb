@@ -35,6 +35,11 @@ SKIP_TEAMS = [
   "Cypriot First Division"
 ]
 
+# 30-32 -> 0%
+# 33 -> 20%
+#
+
+
 def create_sofifa_teams(years)
   puts "Creating Teams and Leagues..."
   years.each do |year|
@@ -43,7 +48,7 @@ def create_sofifa_teams(years)
     puts "opening #{filepath}..."
 
     CSV.foreach(filepath, headers: :first_row) do |row|
-      next if SKIP_TEAMS.include?(row['league_name'])
+      # next if SKIP_TEAMS.include?(row['league_name'])
 
       league = League.where(
         name: row['league_name'],
@@ -186,7 +191,6 @@ def fbref_players(years)
 end
 
 def sofifa_players(years)
-  errors = []
   puts "Creating Players..."
   years.each do |year|
     filepath = "db/raw_data/players_#{year}.csv"
@@ -197,7 +201,7 @@ def sofifa_players(years)
     ).first_or_create
     puts "opening #{filepath}..."
     CSV.foreach(filepath, headers: :first_row) do |row|
-      next if SKIP_TEAMS.include?(row['league_name'])
+      # next if SKIP_TEAMS.include?(row['league_name'])
 
       player = Player.where(
         position: row['player_positions'].split(', ').first,
@@ -209,10 +213,22 @@ def sofifa_players(years)
         short_name: row['short_name'],
         long_name: row['long_name']
       ).first_or_create
-      if player.errors.any?
-        p player.errors.full_messages
-        puts
+
+      player = Player.find_by(sofifa_id: row['sofifa_id'])
+      unless player
+        player = Player.where(
+          position: row['player_positions'].split(', ').first,
+          sofifa_id: row['sofifa_id'],
+          player_url: row['player_url'],
+          dob: Date.parse(row['dob']),
+          nationality_name: row['nationality_name'],
+          preferred_foot: row['preferred_foot'],
+          short_name: row['short_name'],
+          long_name: row['long_name']
+        ).first_or_create
       end
+      next unless player.errors.empty?
+
       PlayerSeason.where(
         team: Team.find_by(name: row['club_name']),
         player: player,
@@ -258,5 +274,5 @@ end
 
 # create_sofifa_teams(years)
 # update_teams_with_fbref(years)
-# sofifa_players(years)
+sofifa_players(years)
 # fbref_players(years)

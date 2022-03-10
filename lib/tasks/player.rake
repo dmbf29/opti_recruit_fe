@@ -17,7 +17,13 @@ namespace :player do
       if player
         ps = player.player_seasons.find_by(season: season)
         if ps
-          ps.update(value_eur_proj_next: row['predict_value'].to_f)
+          if player.age > 33
+            ps.update(value_eur_proj_next: row['predict_value'].to_f * 0.8)
+          elsif [31, 32, 33].include?(player.age)
+            ps.update(value_eur_proj_next: row['predict_value'].to_f * 0.9)
+          else
+            ps.update(value_eur_proj_next: row['predict_value'].to_f)
+          end
         else
           puts player.short_name
         end

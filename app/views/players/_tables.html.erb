@@ -19,7 +19,7 @@
   </thead>
   <tbody>
     <% players.each_with_index do |player, index| %>
-      <tr>
+      <tr class='align-middle'>
         <% if params[:controller] == 'players' && params[:action] == 'index' %>
           <th scope="row" class='align-middle text-center'>
             <%= link_to player_path(player), class: 'text-primary' do %>
@@ -31,7 +31,7 @@
         <% end %>
         <td class='d-flex align-items-center ellipsis'>
           <% if player.player_season_of(@season)&.player_face_url %>
-            <%= image_tag player.player_seasons.last&.player_face_url, width: 30, class: "d-none d-sm-block" %>
+            <%= image_tag player.player_seasons.last&.player_face_url, width: 30, class: "pb-1 d-none d-sm-block" %>
           <% end %>
           <div>
             <span class="ms-1 ellipsis"><%= player.name || player.long_name %></span>
