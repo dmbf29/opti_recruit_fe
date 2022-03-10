@@ -7,24 +7,23 @@
         <th scope="col">#</th>
       <% end %>
       <th scope="col">NAME</th>
-      <th scope="col" class='text-center'>PREF POS</th>
       <th scope="col" class='text-center'>AGE</th>
-      <th scope="col" class='text-center'>GROW</th>
+      <th scope="col" class='text-center'>FROM</th>
+      <th scope="col" class='text-center'>TO</th>
       <% if params[:controller] == 'players' && params[:action] == 'show' && players.length > 1 %>
         <th scope="col" class='text-center'>MATCH</th>
       <% end %>
+      <th scope="col" class='text-center'>PURCHASE PRICE</th>
       <th scope="col" class='text-center'>MARKET VAL</th>
-      <th scope="col" class='text-center'>PRED VAL</th>
+      <th scope="col" class='text-center'>SALE PROFIT</th>
     </tr>
   </thead>
   <tbody>
     <% players.each_with_index do |player, index| %>
       <tr>
         <% if params[:controller] == 'players' && params[:action] == 'index' %>
-          <th scope="row" class='align-middle text-center'>
-            <%= link_to player_path(player), class: 'text-primary' do %>
-              <i class="fas fa-search"></i>
-            <% end %>
+          <th scope="row" class='align-middle text-center text-primary fw-bolder'>
+            <%= index + 1 %>
           </th>
         <% else %>
           <th scope="row"><%= index + 1 %></th>
@@ -40,9 +39,10 @@
             <% end %>
           </div>
         </td>
+        <td class='text-center'><%= player.age %></td>
         <td class='text-center'><%= player.position %></td>
         <td class='text-center'><%= player.age %></td>
-        <td class='text-center'><%= render 'players/growth_icon', growth: player.growth_potential %> </td>
+        <td class='text-center'><%= value_eur_display(player.player_season_of(@season)&.value_eur) %></td>
         <% if params[:controller] == 'players' && params[:action] == 'show' && players.length > 1 %>
           <td class='text-center text-primary fw-normal'><%= player.match %></td>
         <% end %>
