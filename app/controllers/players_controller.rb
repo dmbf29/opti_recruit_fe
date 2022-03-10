@@ -14,8 +14,8 @@ class PlayersController < ApplicationController
     @player = Player.find(params[:id])
     @team = @player.team
     @positions = Player.pluck(:position).uniq.sort
-    @players = @player.search(params)
-    # @players = FetchSimilarService.new(sofifa_id: @player.sofifa_id, params: params).call
+    # @players = @player.search(params)
+    @players = FetchSimilarService.new(sofifa_id: @player.sofifa_id, params: params).call
     respond_to do |format|
       format.html
       format.text { render partial: 'players/tables', locals: { players: @players }, formats: [:html] }
