@@ -5,11 +5,11 @@ class FetchSimilarService
     @base_url = 'https://optirecruitimage-cdv64b7nfq-an.a.run.app'
     @sofifa_id = attrs[:sofifa_id]
     @params = attrs[:params]
+    @position = attrs[:position]
     @age_min = params[:age_min].blank? ? 0 : params[:age_min]
     @age_max = params[:age_max].blank? ? 99 : params[:age_max]
     @value_min = params[:value_min].blank? ? 0 : params[:value_min]
     @value_max = params[:value_max].blank? ? 999_999_999 : params[:value_max]
-    @position = params[:position]
     @url = "#{@base_url}/similarities?player_id=#{sofifa_id}&age_min=#{age_min}&age_max=#{age_max}&value_min=#{value_min}&value_max=#{value_max}&position=#{position}"
   end
 
