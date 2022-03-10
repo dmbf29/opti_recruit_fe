@@ -1,6 +1,6 @@
 module PlayerHelper
   def value_eur_display(num)
-    return '-' unless num
+    return '-' unless num && num.positive?
 
     if num.digits.length >= 7
       "€#{num&.fdiv(1000000)&.round(2)}M"
