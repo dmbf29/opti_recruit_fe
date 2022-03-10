@@ -13,7 +13,8 @@
       <% if params[:controller] == 'players' && params[:action] == 'show' && players.length > 1 %>
         <th scope="col" class='text-center'>MATCH</th>
       <% end %>
-      <th scope="col" class='text-center'>VAL</th>
+      <th scope="col" class='text-center'>MARKET VAL</th>
+      <th scope="col" class='text-center'>PREDICTED VAL</th>
     </tr>
   </thead>
   <tbody>
@@ -45,7 +46,8 @@
         <% if params[:controller] == 'players' && params[:action] == 'show' && players.length > 1 %>
           <td class='text-center text-primary fw-normal'><%= "#{(99 - index)}.#{rand(0..99)}" %></td>
         <% end %>
-        <td class='text-center'>€<%= player.last_player_season&.value_eur&.fdiv(1000000)&.round(2) %>M</td>
+        <td class='text-center'><%= value_eur_display(player.last_player_season&.value_eur) %></td>
+        <td class='text-center'><%= value_eur_display(player.last_player_season&.value_eur_proj_next) %></td>
       </tr>
     <% end %>
   </tbody>
