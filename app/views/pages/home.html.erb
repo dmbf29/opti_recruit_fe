@@ -18,12 +18,16 @@
   <div class="row justify-content-center">
     <div class="col col-sm-10 col-md-6">
       <h3>The Project</h3>
-      <p class="mb-3">Outfield players dataset - Total number of players : 2040. Features for each player : 164. Minimum 90s played : 3.</p>
-      <p class="mb-3">Goal-keepers dataset - Total number of players : 173. Features for each player : 40. Minimum 90s played : 1.5.</p>
-      <p class="mb-3">❗ 💡 Note: The similarity values are strictly based on the statistical output of players, in this case 40 statistical features for GK's and 164 features for outfield players. The similarity values are not probabilities but resemble more to percentiles (cosine distances normalized to the range 0 to 100).</p>
-      <p class="mb-3">🐍 Principal Component Analysis (PCA) was used for dimensionality reduction. The detailed blog covering the entire lifecycle of the project in detail including data preprocessing, exploratory data analysis and approach used for building the recommendation engine is available here.</p>
-      <p class="mb-3">💻 The code for this streamlit app is available here.</p>
-      <p class="mb-3">🌏 Reach out to me on Twitter. Also check out my sports analytics work here.</p>
+      <p class="mb-3">Outfield players dataset - Total number of players : 22102. </p>
+      <p class="mb-3">Goal-keepers dataset - Total number of players : 2781</p>
+      <p class="mb-3">❗ 💡 Note: The recommendation matrix is a measure of cosine similarity that looks at the angle between two vectors and allow to capture "style".</p>
+      <div class="col-6 mb-3">
+        <%= image_tag "matrix.png", class: "w-100" %>
+      </div>
+      <p class="mb-3">💶 The predicted transfer values were predicted using a standard linear regressions model.</p>
+      <p class="mb-3">🌏 Our presentation slides can be found <%= link_to 'here.', 'https://prezi.com/view/bXbjIZ2h9ychguX1mqIB' %></p>
+      <p class="mb-3">💻 The code for this project is available <%= link_to 'here.', 'https://github.com/riadh-anis/opti_recruit' %></p>
+      <p class="mb-3">💻 The code for the front-end is available <%= link_to 'here.', 'https://github.com/dmbf29/opti_recruit_fe' %></p>
     </div>
   </div>
 </div>
